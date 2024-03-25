@@ -106,7 +106,7 @@ const productManager = new ProductManager()
 
     const product = productManager.getProductById()
     if (product) {
-        console.log(product)
+        console.log(`El producto que corresponde al ID ${product.id} es:`, product)
     } else {
         console.log("Not found")
     }
