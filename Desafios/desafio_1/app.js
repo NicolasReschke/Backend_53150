@@ -1,18 +1,22 @@
 class ProductManager {
     constructor() {
-        this.products = [];
-        this.lastId = 0;
+        this.products = []
+        this.lastId = 0
     }
 
+    getProducts() {
+        return this.products
+    }
+    
     addProduct({ title, category, description, price, thumbnail, code, stock }) {
-        if (!title || !category || !description || !price || !thumbnail || !code || stock == null) {
-        console.error("Todos los campos son obligatorios");
-        return;
+        if (!title || !category || !description || !price || !thumbnail || !code || !stock) {
+        console.error("Todos los campos son obligatorios")
+        return
         }
 
         if (this.products.some(product => product.code === code)) {
-        console.error("El código del producto ya existe");
-        return;
+        console.error("El código del producto proporcionado ya está en uso")
+        return
         }
 
         const newProduct = {
@@ -26,25 +30,20 @@ class ProductManager {
             stock
         };
 
-        this.products.push(newProduct);
-        return newProduct;
-    }
-
-    getProducts() {
-        return this.products;
+        this.products.push(newProduct)
+        return newProduct
     }
 
     getProductById(id) {
-        const product = this.products.find(product => product.id === id);
+        const product = this.products.find(product => product.id === id)
         if (!product) {
-            console.error("Not found");
-            return;
+            return
         }
-        return product;
+        return product
     }
 }
 
-const productManager = new ProductManager();
+const productManager = new ProductManager()
     productManager.addProduct({
         title: "Ñoquis tradicionales",
         category: "ñoquis",
@@ -53,7 +52,7 @@ const productManager = new ProductManager();
         thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisTradicionales1.jpeg",
         code: "4kHfraAciqpy6R2IjIXP",
         stock: 20
-    });
+    })
     productManager.addProduct({
         title: "Sorrentinos de Verdura",
         category: "sorrentinos",
@@ -62,7 +61,7 @@ const productManager = new ProductManager();
         thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/sorrentinos2.jpeg",
         code: "7mwrPsrFP9gdtlLuphyP",
         stock: 20
-    });
+    })
     productManager.addProduct({
         title: "Raviolones de 4 quesos",
         category: "raviolones",
@@ -71,7 +70,7 @@ const productManager = new ProductManager();
         thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/raviolones2.jpeg",
         code: "VvSNdiTtBMlAZQ2iosHF",
         stock: 20
-    });
+    })
     productManager.addProduct({
         title: "Tallarines de morrón",
         category: "tallarines",
@@ -80,13 +79,36 @@ const productManager = new ProductManager();
         thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/tallarines3.jpeg",
         code: "WbWhmXsRob2dZUlcHNBm",
         stock: 20
-    });
-/* console.log(productManager.getProducts()); */
+    })
 
+    //Errores
+    //console.error("Todos los campos son obligatorios")
+    productManager.addProduct({
+        /* title: "Ñoquis rellenos", */
+        category: "ñoquis",
+        description: "Ñoquis rellenos de muzarella (1 kg rinde 4 porciones)",
+        price: 2500,
+        thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisRellenos1.jpeg",
+        code: "WStu5tVc1Pp7rFlxxoqj",
+        stock: 20
+    })
 
-const product = productManager.getProductById();
-if (product) {
-    console.log(product);
-} else {
-    console.log("Producto no encontrado");
-}
+    //console.error("El código del producto ya existe/está en uso")
+    productManager.addProduct({
+        title: "Tallarines al huevo",
+        category: "tallarines",
+        description: "Los más tradicionales Tallarines al huevo, súper rendidores y sabrosos. 1 kg rinde 5/6 porciones",
+        price: 1800,
+        thumbnail: "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/tallarines1.jpeg",
+        code: "WbWhmXsRob2dZUlcHNBm",
+        stock: 20
+    })
+
+    const product = productManager.getProductById()
+    if (product) {
+        console.log(product)
+    } else {
+        console.log("Not found")
+    }
+    
+    console.log(productManager.getProducts())
