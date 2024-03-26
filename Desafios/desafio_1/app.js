@@ -1,45 +1,45 @@
 class ProductManager {
     constructor() {
         this.products = []
-        this.lastId = 0
+        this.nextId = 1
+    }
+
+    addProduct({ title, category, description, price, thumbnail, code, stock }) {
+        if (title && category && description && typeof price === 'number' && price > 1 && thumbnail && code && typeof stock === 'number' && stock > 1) {
+            const exists = this.products.some(product => product.code === code)
+            if (!exists) {
+                const newProduct = {
+                    id: this.nextId++,
+                    title,
+                    category,
+                    description,
+                    price,
+                    thumbnail,
+                    code,
+                    stock,
+                };
+                this.products.push(newProduct);
+                console.log("Producto agregado de manera correcta:", newProduct)
+            } else {
+                console.error("Error: El código del producto ya existe.")
+            }
+        } else {
+            console.error("Error: Todos los campos son obligatorios.")
+        }
     }
 
     getProducts() {
         return this.products
     }
-    
-    addProduct({ title, category, description, price, thumbnail, code, stock }) {
-        if (!title || !category || !description || !price || !thumbnail || !code || !stock) {
-        console.error("Todos los campos son obligatorios")
-        return
-        }
-
-        if (this.products.some(product => product.code === code)) {
-        console.error("El código del producto proporcionado ya está en uso")
-        return
-        }
-
-        const newProduct = {
-            id: ++this.lastId,
-            title,
-            category,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
-        };
-
-        this.products.push(newProduct)
-        return newProduct
-    }
 
     getProductById(id) {
         const product = this.products.find(product => product.id === id)
-        if (!product) {
-            return
+        if (product) {
+            return product
+        } else {
+            console.error("Error: Producto no encontrado.")
+            return null
         }
-        return product
     }
 }
 
@@ -104,11 +104,9 @@ const productManager = new ProductManager()
         stock: 20
     })
 
-    const product = productManager.getProductById()
+    const product = productManager.getProductById(2)
     if (product) {
         console.log(`El producto que corresponde al ID ${product.id} es:`, product)
     } else {
         console.log("Not found")
     }
-    
-    console.log(productManager.getProducts())
