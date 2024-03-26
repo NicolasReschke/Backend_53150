@@ -29,7 +29,7 @@ class ProductManager {
     }
 
     getProducts() {
-        return this.products
+        return this.products.length > 0 ? this.products : [];
     }
 
     getProductById(id) {
@@ -44,6 +44,7 @@ class ProductManager {
 }
 
 const productManager = new ProductManager()
+console.log(productManager.getProducts());
     productManager.addProduct({
         title: "Ñoquis tradicionales",
         category: "ñoquis",
