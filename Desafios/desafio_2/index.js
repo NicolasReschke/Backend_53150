@@ -1,7 +1,8 @@
-const ProductManager = require('./appPrueba.js');
+const ProductManager = require('./app.js');
+const path = require('path')
 
 // Ruta del archivo donde se guardarán los productos
-const filePath = 'products.json';
+const filePath = path.join(__dirname, 'products.json')
 
 // Crear una instancia de ProductManager
 const productManager = new ProductManager(filePath);

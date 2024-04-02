@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch Clases/3raClase_sincronia_asincronia/app.js"
+    "start": "node --watch Clases/4taClase_manejo_de_archivos/usuarios.js"
   },
   "keywords": [],
   "author": "",
