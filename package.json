@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch Clases/4taClase_manejo_de_archivos/usuarios.js"
+    "start": "node --watch Desafios/desafio_2/app.js"
   },
   "keywords": [],
   "author": "",

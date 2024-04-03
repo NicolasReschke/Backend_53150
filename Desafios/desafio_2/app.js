@@ -1,65 +1,45 @@
-const fs = require('fs/promises')
+const ProductManager = require('./product_manager.js')
 
-class ProductManager {
-    constructor(path) {
-        this.path = path
+const productManager = new ProductManager('products.json');
+
+(async () => {
+    const newProduct = {
+        title: 'producto prueba',
+        description: 'Este es un producto prueba',
+        price: 200,
+        thumbnail: 'Sin imagen',
+        code: 'abc123',
+        stock: 25
+    };
+    await productManager.addProduct(newProduct)
+
+    // Obtener todos los productos
+    const allProducts = await productManager.getProducts()
+    console.log('Todos los productos:', allProducts)
+    
+    // Obtener un producto por su id
+    const productId = 1
+    const productById = await productManager.getProductById(productId)
+    console.log(`Producto con ID ${productId}:`, productById)
+
+    // Actualizar un producto por su id
+    const updateFieldById = 3
+    const updatedFields = {
+        description:"Raviolones de 4 quesos. Consultar promoción especial: 2 docenas por $4000",
+        price: 4000
     }
+    const updated = await productManager.updateProduct(updateFieldById, updatedFields)
+    console.log(`Producto con ID ${updateFieldById} actualizado:`, updated)
 
-    async _readFile() {
-        try {
-            const data = await fs.readFile(this.path, 'utf8');
-            return JSON.parse(data);
-        } catch (error) {
-            // Si el archivo no existe, retorna un arreglo vacío
-            if (error.code === 'ENOENT') {
-                return [];
-            } else {
-                throw error;
-            }
-        }
-    }
+    // Eliminar un producto por su id
+    const deleteProductById = 10
+    const deleted = await productManager.deleteProduct(deleteProductById)
+    console.log(`Producto con ID ${deleteProductById} eliminado:`, deleted)
 
-    async _writeFile(data) {
-        await fs.writeFile(this.path, JSON.stringify(data, null, 2), 'utf8');
-    }
-
-    async addProduct(product) {
-        const products = await this._readFile();
-        const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-        const newProduct = { ...product, id: newId };
-        products.push(newProduct);
-        await this._writeFile(products);
-        return newProduct;
-    }
-
-    async getProducts() {
-        return await this._readFile();
-    }
-
-    async getProductById(id) {
-        const products = await this._readFile();
-        return products.find(product => product.id === id);
-    }
-
-    async updateProduct(id, updatedProduct) {
-        const products = await this._readFile();
-        const productIndex = products.findIndex(product => product.id === id);
-        if (productIndex === -1) return null;
-
-        // Actualiza manteniendo el id original
-        products[productIndex] = { ...products[productIndex], ...updatedProduct, id };
-        await this._writeFile(products);
-        return products[productIndex];
-    }
-
-    async deleteProduct(id) {
-        const products = await this._readFile();
-        const newProducts = products.filter(product => product.id !== id);
-        if (newProducts.length === products.length) return false; // No se encontró el producto a eliminar
-
-        await this._writeFile(newProducts);
-        return true;
-    }
-}
-
-module.exports = ProductManager;
+    // Mostrar el listado actualizado
+    const updatedProducts = await productManager.getProducts()
+    console.log('Listado de productos actualizado:')
+    updatedProducts.forEach(product => {
+        console.log(`- ${product.title} \n Precio: $ ${product.price} - ID: ${product.id}`)
+    })
+})()
