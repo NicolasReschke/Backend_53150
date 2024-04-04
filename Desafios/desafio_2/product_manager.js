@@ -4,93 +4,101 @@ const fs = require('fs/promises')
 class ProductManager {
     constructor() {
         this.path = path.join(__dirname, 'products.json')
+        this.products = []
+        this.nextId = 1
     }
 
-    async addProduct(product) {
+    async addProduct({ title, description, price, thumbnail, code, stock }) {
         try {
-            let products = await this.getProducts()
+            if (title && description && typeof price === 'number' && price > 1 && thumbnail && code && typeof stock === 'number' && stock > 1) {
+                const currentProducts = await this.getProducts()
+                const existingProduct = currentProducts.find(product => product.title === title)
+                if (existingProduct) {
+                    console.error(`El producto "${title}" ya existe.`)
+                    return
+                }
 
-            const existingProduct = products.find(p => p.title === product.title)
-            if (existingProduct) {
-                console.error(`Error: El producto "${product.title}" ya existe.`)
-                return
+                const newId = currentProducts.length + 1
+
+                const newProduct = {
+                    title,
+                    description,
+                    price,
+                    thumbnail,
+                    code,
+                    stock,
+                    id: newId
+                }
+
+                currentProducts.push(newProduct)
+
+                await fs.writeFile(this.path, JSON.stringify(currentProducts, null, 2))
+                console.log("Producto agregado de manera correcta:")
+            } else {
+                console.log("Todos los campos son obligatorios y deben cumplir con los requisitos.")
             }
-    
-            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
-            product.id = newId
-    
-            products.push(product)
-    
-            await fs.writeFile(this.path, JSON.stringify(products, null, 2), 'utf8')
         } catch (error) {
-            console.error('Error al intentar agregar un producto', error)
+            console.error("Error al agregar el producto:", error.message)
+            throw error
         }
     }
 
     async getProducts() {
         try {
-            const exists = await fs.access(this.path)
-                .then(() => true)
-                .catch(() => false);
-    
-            if (!exists) {
-                await fs.writeFile(this.path, '[]', 'utf8')
-                return []
-            }
-    
             const data = await fs.readFile(this.path, 'utf8')
             return JSON.parse(data)
         } catch (error) {
-            console.error('Error al intentar obtener los productos', error)
-            return []
+            if (error.code === 'ENOENT') {
+                await fs.writeFile(this.path, JSON.stringify([]))
+                return []
+            } else {
+                throw error
+            }
         }
     }
 
     async getProductById(id) {
         try {
             const products = await this.getProducts()
-            const product = products.find(product => product.id === id)
-            return product || console.log(`El producto con ID ${id} no se encuentra`)
+            const product = products.find(p => p.id === id)
+            if (!product) {
+                throw new Error("Error: Producto no encontrado.")
+            }
+            return product
         } catch (error) {
-            console.error('Error al intentar obtener el producto por su ID:', error)
-            return null
+            console.error(error.message)
+            throw error
         }
     }
 
-    async updateProduct(id, updatedFields) {
+    async updateProduct(id, updatedProduct) {
         try {
-            let products = await this.getProducts()
-            const index = products.findIndex(product => product.id === id)
-            if (index !== -1) {
-                products[index] = { ...products[index], ...updatedFields }
-                await fs.writeFile(this.path, JSON.stringify(products))
-                return true
+            const products = await this.getProducts()
+            const productIndex = products.findIndex(p => p.id === id)
+            if (productIndex === -1) {
+                throw new Error("Producto no encontrado.")
             }
-            return false
+            products[productIndex] = { ...products[productIndex], ...updatedProduct, id: products[productIndex].id }
+            await fs.writeFile(this.path, JSON.stringify(products, null, 2))
+            console.log("Producto actualizado correctamente.")
         } catch (error) {
-            console.error('Error al intentar actualizar el producto', error)
-            return false
+            console.error("Error al actualizar el producto:", error)
+            throw error
         }
     }
 
     async deleteProduct(id) {
         try {
-            let products = await this.getProducts()
-            const initialLength = products.length
-    
-            products = products.filter(product => product.id !== id)
-    
-            if (products.length === initialLength) {
-                console.error(`Error al intentar eliminar el producto con el ID ${id}`)
-                return false
+            const products = await this.getProducts()
+            const filteredProducts = products.filter(p => p.id !== id)
+            if (products.length === filteredProducts.length) {
+                throw new Error(`El producto con el ID ${id} no se pudo eliminar porque no existe.`)
             }
-    
-            await fs.writeFile(this.path, JSON.stringify(products, null, 2))
-    
-            return true
+            await fs.writeFile(this.path, JSON.stringify(filteredProducts, null, 2))
+            console.log("Producto eliminado correctamente.")
         } catch (error) {
-            console.error('Error al intentar eliminar el producto por su ID:', error)
-            return false
+            console.error("Error al eliminar el producto:", error)
+            throw error
         }
     }
 }

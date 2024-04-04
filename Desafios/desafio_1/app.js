@@ -8,8 +8,11 @@ class ProductManager {
         if (title && category && description && typeof price === 'number' && price > 1 && thumbnail && code && typeof stock === 'number' && stock > 1) {
             const exists = this.products.some(product => product.code === code)
             if (!exists) {
+                const newId = this.products.reduce((acc, current) => {
+                    return current.id > acc ? current.id : acc;
+                }, 0) + 1;
                 const newProduct = {
-                    id: this.nextId++,
+                    id: newId,
                     title,
                     category,
                     description,
