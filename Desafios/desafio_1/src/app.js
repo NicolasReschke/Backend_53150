@@ -5,7 +5,7 @@ class ProductManager {
     }
 
     addProduct({ title, category, description, price, thumbnail, code, stock }) {
-        if (title && category && description && typeof price === 'number' && price > 1 && thumbnail && code && typeof stock === 'number' && stock > 1) {
+        if (title && category && description && typeof price === 'number' && price > 1 && thumbnail && code && typeof stock === 'number' && stock >= 1) {
             const exists = this.products.some(product => product.code === code)
             if (!exists) {
                 const newId = this.products.reduce((acc, current) => {

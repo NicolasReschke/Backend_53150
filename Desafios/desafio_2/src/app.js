@@ -26,7 +26,7 @@ async function main() {
         })
 
         // Eliminar un producto
-        await productManager.deleteProduct(5)
+        await productManager.deleteProduct(7)
 
         // Mostrar el listado actualizado
         const products = await productManager.getProducts()
