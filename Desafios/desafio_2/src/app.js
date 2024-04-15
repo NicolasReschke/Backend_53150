@@ -4,6 +4,8 @@ async function main() {
     try {
         const productManager = new ProductManager('./products.json')
 
+        await productManager.initFile()
+
         await productManager.addProduct({
             title: "Producto Prueba",
             description: "Este es un producto de prueba",
@@ -17,7 +19,7 @@ async function main() {
         console.log(await productManager.getProducts())
 
         // Obtener un producto por ID
-        console.log(await productManager.getProductById(1))
+        console.log(await productManager.getProductById(2))
 
         // Actualizar un producto
         await productManager.updateProduct(3, {
@@ -26,7 +28,7 @@ async function main() {
         })
 
         // Eliminar un producto
-        await productManager.deleteProduct(7)
+        await productManager.deleteProduct(5)
 
         // Mostrar el listado actualizado
         const products = await productManager.getProducts()

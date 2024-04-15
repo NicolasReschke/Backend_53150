@@ -1,0 +1,92 @@
+[
+    {
+        "title": "Ñoquis tradicionales",
+        "description": "Ñoquis tradicionales de papa (1 kg rinde 3 porciones)",
+        "price": 1800,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisTradicionales1.jpeg",
+        "code": "4kHfraAciqpy6R2IjIXP",
+        "stock": 20,
+        "id": 1
+    },
+    {
+        "title": "Sorrentinos de Verdura",
+        "description": "Sorrentinos de verdura. Consultar por promoción especial: 2 docenas por $2500",
+        "price": 2200,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/sorrentinos2.jpeg",
+        "code": "7mwrPsrFP9gdtlLuphyP",
+        "stock": 20,
+        "id": 2
+    },
+    {
+        "title": "Raviolones de 4 quesos",
+        "description": "Raviolones de 4 quesos. Consultar promoción especial: 2 docenas por $4000",
+        "price": 4000,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/raviolones2.jpeg",
+        "code": "VvSNdiTtBMlAZQ2iosHF",
+        "stock": 20,
+        "id": 3
+    },
+    {
+        "title": "Ñoquis rellenos",
+        "description": "Ñoquis rellenos de muzarella (1 kg rinde 4 porciones)",
+        "price": 2500,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisRellenos1.jpeg",
+        "code": "WStu5tVc1Pp7rFlxxoqj",
+        "stock": 20,
+        "id": 4
+    },
+    {
+        "title": "Tapas para empanada",
+        "description": "Tapas de empanadas caseras para freír $500 por docena",
+        "price": 600,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/empanada1.jpeg",
+        "code": "LUudK15lVZiFTLicLTIh",
+        "stock": 20,
+        "id": 5
+    },
+    {
+        "title": "Raviolones de JyQ",
+        "description": "Raviolones de jamón y queso. Consultar promoción especial: 2 docenas por $3000",
+        "price": 1800,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/raviolones1.jpeg",
+        "code": "Wb2TtkqWBokdK5iDqTjU",
+        "stock": 20,
+        "id": 6
+    },
+    {
+        "title": "Sorrentinos de JyQ",
+        "description": "Sorrentinos de Jamón y queso. Consultar por promoción especial: 2 docenas por $4000",
+        "price": 2500,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/sorrentinos1.jpeg",
+        "code": "nqn85VyWTtiFBI2dE9Id",
+        "stock": 20,
+        "id": 7
+    },
+    {
+        "title": "Tallarines de morrón",
+        "description": "Tallarines de morrón, 1 kg rinde 5/6 porciones",
+        "price": 2000,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/tallarines3.jpeg",
+        "code": "WbWhmXsRob2dZUlcHNBm",
+        "stock": 20,
+        "id": 8
+    },
+    {
+        "title": "Tallarines al huevo",
+        "description": "Los más tradicionales Tallarines al huevo, súper rendidores y sabrosos. 1 kg rinde 5/6 porciones",
+        "price": 1800,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/tallarines1.jpeg",
+        "code": "w6naRO7VtqLbPsXRGkQz",
+        "stock": 20,
+        "id": 9
+    },
+    {
+        "title": "Producto de prueba",
+        "description": "Descripción de producto de prueba",
+        "price": 2200,
+        "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/tallarines1.jpeg",
+        "code": "w6naRO7VtqLbPsXRGkQz2",
+        "stock": 20,
+        "id": 10
+    }
+]
