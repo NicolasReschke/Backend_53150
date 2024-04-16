@@ -12,27 +12,34 @@ app.get('/products', async (req, res) => {
     try {
         let products = await productManager.getProducts()
         const limit = parseInt(req.query.limit)
-        if (!isNaN(limit)) {
+
+        if (!isNaN(limit) && limit > 0) {
             products = products.slice(0, limit)
+        } else if (req.query.limit !== undefined) {
+            return res.status(404).send('<p>Error: La cantidad de productos debe ser un número mayor q 0.</p>')
         }
 
-        let tableHtml = '<div style="margin: 0 auto; width: 70%;"><table style="border-collapse:    collapse; width: 100%; text-align: center; border: 1px solid black;"><thead><tr style="background-color: #f2f2f2;"><th style="border: 1px solid black; padding: 8px;">ID</th><th style="border: 1px solid black; padding: 8px;">Título</th><th style="border: 1px solid black; padding: 8px;">Descripción</th><th style="border: 1px solid black; padding: 8px;">Precio</th><th style="border: 1px solid black; padding: 8px;">Imagen</th><th style="border: 1px solid black; padding: 8px;">Código interno</th><th style="border: 1px solid black; padding: 8px;">Stock</th></tr></thead><tbody>'
+        let tableHtml = '<div style="margin: 0 auto; width: 70%;"><table style="border-collapse: collapse; width: 100%; text-align: center; border: 1px solid black;"><thead><tr style="background-color: #f2f2f2;"><th style="border: 1px solid black; padding: 8px;">ID</th><th style="border: 1px solid black; padding: 8px;">Título</th><th style="border: 1px solid black; padding: 8px;">Descripción</th><th style="border: 1px solid black; padding: 8px;">Precio</th><th style="border: 1px solid black; padding: 8px;">Imagen</th><th style="border: 1px solid black; padding: 8px;">Código interno</th><th style="border: 1px solid black; padding: 8px;">Stock</th></tr></thead><tbody>'
         products.forEach(product => {
             const rowColor = product.id % 2 === 0 ? '#f9f9f9' : '#e6e6e6'
             tableHtml += `<tr style="background-color: ${rowColor};"><td style="border: 1px solid black; padding: 8px;">${product.id}</td><td style="border: 1px solid black; padding: 8px;">${product.title}</td><td style="border: 1px solid black; padding: 8px;">${product.description}</td><td style="border: 1px solid black; padding: 8px;">${product.price}</td><td style="border: 1px solid black; padding: 8px;"><img src="${product.thumbnail}" alt="Thumbnail" style="max-width: 100px; max-height: 100px;"></td><td style="border: 1px solid black; padding: 8px;">${product.code}</td><td style="border: 1px solid black; padding: 8px;">${product.stock}</td></tr>`
         })
         tableHtml += '</tbody></table></div>'
-        
+
         res.send(tableHtml)
-        
+
     } catch (error) {
-        res.status(404).send('<p>El servidor no pudo encontrar el contenido solicitado.</p>')
+        res.status(404).send('<p>Error.</p>')
     }
 })
 
 app.get('/products/:pid', async (req, res) => {
     try {
         const productId = parseInt(req.params.pid)
+        if (isNaN(productId)) {
+            return res.status(404).send('<p>El ID proporcionado debe ser un número mayor q 0.</p>')
+        }
+
         const product = await productManager.getProductById(productId)
         if (!product) {
             const products = await productManager.getProducts()
