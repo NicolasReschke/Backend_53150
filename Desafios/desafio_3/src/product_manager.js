@@ -60,7 +60,7 @@ class ProductManager {
             const product = products.find(p => p.id === id)
             return product || null
         } catch (error) {
-            console.error("Error al obtener el producto por ID:", error.message);
+            console.error("Error al obtener el producto por ID:", error.message)
         throw error
         }
     }
