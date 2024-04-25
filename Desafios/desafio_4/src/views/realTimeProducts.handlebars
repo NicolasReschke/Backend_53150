@@ -1,0 +1,87 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Lista de productos</h1>
+            <div id="productList"></div>
+            {{#if products}}
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Thumbnail</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{title}}</td>
+                                <td>{{description}}</td>
+                                <td>${{price}}</td>
+                                <td><img src="{{thumbnail}}" alt="{{title}} thumbnail" class="img-fluid" style="width: 50px;"></td>
+                                <td>
+                                    <a href="/products/{{id}}" class="btn btn-info">Delete</a>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>No hay productos disponibles! 😥</p>
+            {{/if}}
+        </div>
+        
+        <div class="col-md-6">
+            <h2>Agregar Nuevo Producto</h2>
+            <form id="productForm">
+                <div class="mb-3">
+                    <input type="text" name="title" class="form-control" placeholder="Título" required>
+                </div>
+                {{!-- <div class="mb-3">
+                    <input type="text" name="description" class="form-control" placeholder="Descripción" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="code" class="form-control" placeholder="Codigo" required>
+                </div>
+                <div class="mb-3">
+                    <input type="number" name="price" class="form-control" placeholder="Precio" required>
+                </div>
+                <div class="mb-3">
+                    <input type="number" name="stock" class="form-control" placeholder="Stock" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="category" class="form-control" placeholder="Categoria" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="thumbnail" class="form-control" placeholder="Thumbnail URL" required>
+                </div> --}}
+                <button type="submit" class="btn btn-primary">Agregar producto</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    document.getElementById('productForm').addEventListener('submit', (event) => {
+        event.preventDefault()
+        const formData = new FormData(event.target)
+        const newProduct = {
+            title: formData.get('title'),
+            //description: formData.get('description'),
+            //code: formData.get('code'),
+            //price: formData.get('price'),
+            //stock: formData.get('stock'),
+            //category: formData.get('category'),
+            //thumbnail: formData.get('thumbnail')
+        }
+        socket.emit('addProduct', newProduct)
+        event.target.reset()
+    })
+</script>
