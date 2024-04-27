@@ -1,48 +1,51 @@
-const fs = require('fs/promises')
-const path = require('path')
+import fs from 'fs';
+import path from 'path';
+import __dirname from '../utils.js';
 
-const productsFilePath = path.join(__dirname, '../data/products.json')
+const productsFilePath = path.join(__dirname, 'data', 'products.json')
 
-module.exports = (io) => {
-    io.on('connection', (socket) => {
-        console.log('Nuevo Cliente conectado')
+export function handleSocketConnection(socketServer) {
+    socketServer.on('connection', socket => {
+        console.log("Nuevo cliente conectado")
 
-        socket.on('addProduct', async (newProduct) => {
-            try {
-                await saveProductToJSON(newProduct)
-
-                io.emit('newProductAdded', newProduct)
-
-            } catch (error) {
-                console.error('Error al agregar el producto:', error)
+        fs.readFile(productsFilePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading products file:', err)
+                return
             }
+            const products = JSON.parse(data)
+            socket.emit('currentProducts', products)
         })
 
-        socket.on('disconnect', () => {
-            console.log('Cliente se desconectó')
+        socket.on('addProduct', async product => {
+            const products = await readProductsFromFile()
+            products.push(product)
+            await writeProductsToFile(products)
+            socketServer.emit('updateProducts', products)
+        })
+
+        socket.on('deleteProduct', async productId => {
+            const products = await readProductsFromFile()
+            const filteredProducts = products.filter(p => p.id !== productId)
+            await writeProductsToFile(filteredProducts)
+            socketServer.emit('updateProducts', filteredProducts)
+            socket.emit('productDeleted', productId)
+        })
+        readProductsFromFile().then(products => {
+            socket.emit('updateProducts', products)
+        })
+
+        socket.on('disconnect', socket => {
+            console.log("Cliente desconectado")
         })
     })
 }
 
-const saveProductToJSON = async (newProduct) => {
-    try {
-        let products = []
-        const data = await fs.readFile(productsFilePath, 'utf8')
-        products = JSON.parse(data)
+async function readProductsFromFile() {
+    const data = await fs.promises.readFile(productsFilePath, 'utf8')
+    return JSON.parse(data)
+}
 
-        const newProductId = products.length + 1
-        const productToAdd = {
-            id: newProductId,
-            ...newProduct,
-            status: true
-        }
-        products.push(productToAdd)
-
-        await fs.writeFile(productsFilePath, JSON.stringify(products, null, 2))
-        console.log('Producto agregado correctamente:', productToAdd)
-        return productToAdd
-    } catch (error) {
-        console.error('Error al agregar el producto:', error)
-        throw error
-    }
+async function writeProductsToFile(products) {
+    await fs.promises.writeFile(productsFilePath, JSON.stringify(products, null, 2), 'utf8')
 }

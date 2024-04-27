@@ -1,57 +1,57 @@
 [
   {
-    "id": 1,
+    "id": "_wt3fqml1t",
     "title": "Ñoquis tradicionales",
     "description": "Ñoquis tradicionales de papa (1 kg rinde 3 porciones)",
     "code": "4kHfraAciqpy6R2IjIXP",
-    "price": 1800,
+    "price": "1800",
     "stock": 20,
     "status": true,
     "category": "ñoquis",
     "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisTradicionales1.jpeg"
   },
   {
-    "id": 2,
+    "id": "_ux1fl3mzo",
     "title": "Sorrentinos de Verdura",
     "description": "Sorrentinos de verdura. Consultar por promoción especial: 2 docenas por $2500",
     "code": "7mwrPsrFP9gdtlLuphyP",
-    "price": 2200,
+    "price": "2200",
     "stock": 20,
     "status": true,
     "category": "sorrentinos",
     "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/sorrentinos2.jpeg"
   },
   {
-    "id": 3,
+    "id": "_bmea1ul0l",
     "title": "Raviolones de 4 quesos",
     "description": "Raviolones de 4 quesos. Consultar promoción especial: 2 docenas por $4000",
     "code": "VvSNdiTtBMlAZQ2iosHF",
-    "price": 4000,
+    "price": "4000",
     "stock": 20,
     "status": true,
     "category": "raviolones",
     "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/raviolones2.jpeg"
   },
   {
-    "id": 4,
-    "title": "ASD",
-    "description": "asd",
-    "code": "222",
-    "price": "22",
-    "stock": "22",
-    "category": "asdasd",
-    "thumbnail": "asdasdasd",
-    "status": true
+    "id": "_qct4z2yyn",
+    "title": "Ñoquis rellenos",
+    "description": "Ñoquis rellenos de muzarella (1 kg rinde 4 porciones)",
+    "code": "WStu5tVc1Pp7rFlxxoqj",
+    "price": "2500",
+    "stock": 20,
+    "status": true,
+    "category": "ñoquis",
+    "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/%C3%B1oquisRellenos1.jpeg"
   },
   {
-    "id": 5,
-    "title": "asd",
-    "description": "asd",
-    "code": "222",
-    "price": "22",
-    "stock": "22",
-    "category": "asdasd",
-    "thumbnail": "asdasdasd",
-    "status": true
+    "id": "_koynbst8e",
+    "title": "Tapas para empanada",
+    "description": "Tapas de empanadas caseras para freír $500 por docena",
+    "code": "LUudK15lVZiFTLicLTIh",
+    "price": "600",
+    "stock": 20,
+    "status": true,
+    "category": "empanadas",
+    "thumbnail": "https://entrega-final-react-js-reschkenicolas.netlify.app/assets/empanada1.jpeg"
   }
 ]
